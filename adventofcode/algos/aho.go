@@ -5,7 +5,7 @@ import (
     "adventofcode/utils"
 )
 
-const K = 3
+const K = 255
 
 
 var AhoTree = make([]TrieNode, 1)
@@ -33,21 +33,20 @@ func NewTrieNode() TrieNode {
 
 func NewAhoTree(str_set []string) []TrieNode {
     tree := []TrieNode{NewTrieNode()}
-    for _, str := range str_set {
-        tree = addString(tree, str)
+    for i, str := range str_set {
+        tree = addString(tree, str, i)
     }
     tree = stateMachineify(tree)
     return tree
 } //NewAhoTree
 
-func addString(tree []TrieNode, str string) []TrieNode {
+func addString(tree []TrieNode, str string, out_val int) []TrieNode {
     if len(tree) < 1 {
         return tree
     }
     cur_node := 0
     for i := range str {
-        ch_index := str[i] - 'a'
-        if i == (len(str) - 1) { tree[cur_node].output = i }
+        ch_index := str[i] //- 'a'
         if tree[cur_node].next[ch_index] == -1 {
             new_node := NewTrieNode()
             new_node.p = cur_node
@@ -59,6 +58,7 @@ func addString(tree []TrieNode, str string) []TrieNode {
             cur_node = tree[cur_node].next[ch_index]
         }
     }
+    tree[cur_node].output = out_val
     return tree
 } //addString
 
@@ -97,6 +97,29 @@ func stateMachineify(tree []TrieNode) []TrieNode {
 } //stateMachineify
 
 
+func MatchStrings(tree []TrieNode, str string) []int {
+    v := 0 
+    var out []int
+    for i := range str {
+        //fmt.Printf("Checking: %c at %d; found? ", str[i], v)
+		link := tree[v].link
+		if (tree[v].output > -1) {
+            //fmt.Print("yup")
+            out = append(out, tree[v].output) 
+        }
+		if (tree[link].output > -1) {
+			//fmt.Print("yup")
+			out = append(out, tree[link].output)
+		}
+        //fmt.Print("\n")
+        v = tree[v].next[str[i]] // - 'a'] 
+    }
+	if (tree[v].output > -1) {
+		out = append(out, tree[v].output)
+	}
+    return out
+} //MatchStrings
+
 func AhoPrettyPrint(tree []TrieNode) {
     if len(tree) < 1 { return; } 
     visited := make([]bool, len(tree))
@@ -119,9 +142,10 @@ func AhoPrettyPrint(tree []TrieNode) {
 func AhoUglyPrint(tree []TrieNode) {
     if len(tree) < 1 { return; }
     for i, node := range tree {
+		fmt.Print(i, ": ")
         for _, next := range node.next {
-            fmt.Print(next, " ,") 
+            fmt.Print(next, ", ") 
         }
-        fmt.Printf(" link: %d \n", tree[i].link)
+        fmt.Printf(" pchar: %c, link: %d, out: %d \n", tree[i].ch, tree[i].link, tree[i].output)
     }
 }
