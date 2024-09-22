@@ -47,6 +47,7 @@ func Day2Part1(file_path string) {
                     cube_num, err := strconv.Atoi(match[2])
                     if err != nil {
                         fmt.Println("Parsing Error: Malformed input")
+                        _ = file.Close()
                         return
                     }
                     if cube_num > bag[0] { is_valid = false }
@@ -54,6 +55,7 @@ func Day2Part1(file_path string) {
                         cube_num, err := strconv.Atoi(match[2])
                         if err != nil {
                             fmt.Println("Parsing Error: Malformed input")
+                            _ = file.Close()
                             return
                         }
                         if cube_num > bag[1] { is_valid = false }
@@ -61,6 +63,8 @@ func Day2Part1(file_path string) {
                         cube_num, err := strconv.Atoi(match[2])
                         if err != nil {
                             fmt.Println("Parsing Error: Malformed input")
+                            _ = file.Close()
+                            return
                         }
                         if cube_num > bag[2] { is_valid = false }
                 }
@@ -72,6 +76,7 @@ func Day2Part1(file_path string) {
         is_valid = true
         game_id = -1
     } //for
+    _ = file.Close()
     fmt.Println("Sum: ", sum)
 } //Day2Part1
 
@@ -117,6 +122,7 @@ func Day2Part2(file_path string) {
                     cube_num, err := strconv.Atoi(match[2])
                     if err != nil {
                         fmt.Println("Parsing Error: Malformed input")
+                        _ = file.Close()
                         return
                     }
                     if cube_num > bag[0] { bag[0] = cube_num }
@@ -124,6 +130,7 @@ func Day2Part2(file_path string) {
                         cube_num, err := strconv.Atoi(match[2])
                         if err != nil {
                             fmt.Println("Parsing Error: Malformed input")
+                            _ = file.Close()
                             return
                         }
                         if cube_num > bag[1] { bag[1] = cube_num }
@@ -131,6 +138,8 @@ func Day2Part2(file_path string) {
                         cube_num, err := strconv.Atoi(match[2])
                         if err != nil {
                             fmt.Println("Parsing Error: Malformed input")
+                            _ = file.Close()
+                            return
                         }
                         if cube_num > bag[2] { bag[2] = cube_num }
                 }
@@ -141,5 +150,6 @@ func Day2Part2(file_path string) {
         bag[1] = 0
         bag[2] = 0
     } //for
+    _ = file.Close()
     fmt.Println("Sum: ", sum)
 } //Day2Part1

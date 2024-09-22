@@ -40,7 +40,8 @@ func Day1Part1(file_path string) {
         } else {
             continue 
         } //if
-    } 
+    }
+    _ = input_file.Close()
     fmt.Print(sum)
 } //Day1Part1
 
@@ -89,6 +90,7 @@ func Day1Part2(file_path string) {
             }
         } //if
     } //for
+    _ = input_file.Close()
     fmt.Println(sum)
 } 
 
