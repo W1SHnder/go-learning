@@ -13,5 +13,5 @@ func main() {
         return
     }
 
-    solvers.Day1Part2(os.Args[1])
+    solvers.Day2Part2(os.Args[1])
 } //main
